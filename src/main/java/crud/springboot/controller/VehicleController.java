@@ -46,11 +46,18 @@ public class VehicleController {
 
     // Simpan kendaraan (khusus admin)
     @PostMapping("/saveVehicle")
-    public String saveVehicle(@ModelAttribute("vehicle") Vehicle vehicle, HttpSession session) {
+    public String saveVehicle(@ModelAttribute("vehicle") Vehicle vehicle, HttpSession session, RedirectAttributes redirectAttributes) {
         if (!Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
             return "redirect:/admin/login";
         }
+
+        if (vehicle.getYear() == null) {
+            redirectAttributes.addFlashAttribute("error", "Tahun kendaraan tidak boleh kosong");
+            return "redirect:/showNewVehicleForm"; // Kembali ke form jika ada kesalahan
+        }
+
         vehicleService.saveVehicle(vehicle);
+        redirectAttributes.addFlashAttribute("success", "Kendaraan berhasil disimpan!");
         return "redirect:/vehicles";
     }
 
@@ -78,10 +85,10 @@ public class VehicleController {
     // Pagination
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                              @RequestParam("sortField") String sortField,
-                              @RequestParam("sortDir") String sortDir,
-                              Model model) {
-        int pageSize = 5;
+                                 @RequestParam("sortField") String sortField,
+                                 @RequestParam("sortDir") String sortDir,
+                                 Model model) {
+        int pageSize = 5; // Ukuran halaman
         Page<Vehicle> page = vehicleService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Vehicle> listVehicles = page.getContent();
 
@@ -93,6 +100,6 @@ public class VehicleController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("listVehicles", listVehicles);
 
-        return "vehicle_list";
+        return "vehicle_list"; // Pastikan ini sesuai dengan nama file template
     }
 }
