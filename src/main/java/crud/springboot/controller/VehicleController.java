@@ -24,14 +24,28 @@ public class VehicleController {
         return "index";
     }
 
-    // Daftar kendaraan (bisa diakses admin dan user)
     @GetMapping("/vehicles")
     public String viewHomePage(Model model, HttpSession session) {
-        if (session.getAttribute("username") == null) {
-            return "redirect:/admin/login";
-        }
-        return findPaginated(1, "brand", "asc", model);
+        return findPaginated(1, "brand", "asc", model); // Default ke halaman pertama
     }
+
+   @GetMapping("/vehicles/page/{pageNo}")
+   public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                @RequestParam(defaultValue = "brand") String sortField,
+                                @RequestParam(defaultValue = "asc") String sortDir,
+                                Model model) {
+       int pageSize = 5; // Ukuran halaman
+       Page<Vehicle> page = vehicleService.findPaginated(pageNo, pageSize, sortField, sortDir);
+       model.addAttribute("currentPage", pageNo);
+       model.addAttribute("totalPages", page.getTotalPages());
+       model.addAttribute("totalItems", page.getTotalElements());
+       model.addAttribute("sortField", sortField);
+       model.addAttribute("sortDir", sortDir);
+       model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+       model.addAttribute("listVehicles", page.getContent());
+   
+       return "vehicle_list";
+   }
 
     // Tambah kendaraan (khusus admin)
     @GetMapping("/showNewVehicleForm")
@@ -80,26 +94,5 @@ public class VehicleController {
         }
         vehicleService.deleteVehicleById(id);
         return "redirect:/vehicles";
-    }
-
-    // Pagination
-    @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                 @RequestParam("sortField") String sortField,
-                                 @RequestParam("sortDir") String sortDir,
-                                 Model model) {
-        int pageSize = 5; // Ukuran halaman
-        Page<Vehicle> page = vehicleService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<Vehicle> listVehicles = page.getContent();
-
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        model.addAttribute("listVehicles", listVehicles);
-
-        return "vehicle_list"; // Pastikan ini sesuai dengan nama file template
     }
 }

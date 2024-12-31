@@ -1,13 +1,13 @@
 package crud.springboot.model;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal; // Tambahkan import untuk BigDecimal
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "rentals")
 public class Rental {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,95 +16,94 @@ public class Rental {
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
-    @Column(nullable = false)
+    @Column(name = "customer_name", nullable = false)
     private String customerName;
 
-    @Column(nullable = false)
+    @Column(name = "customer_phone", nullable = false)
     private String customerPhone;
 
-    @Column(nullable = false)
+    @Column(name = "customer_id", nullable = false)
     private String customerID;
 
-    @Column(nullable = false)
+    @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
-    @Column(nullable = false)
+    @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
-    @Column(nullable = false)
-    private BigDecimal totalPrice; // Ubah dari Double ke BigDecimal
+    @Column(name = "total_price", nullable = false)
+    private BigDecimal totalPrice;
 
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
-    // Getters
+    // Getters and Setters
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public String getCustomerPhone() {
-        return customerPhone;
-    }
-
-    public String getCustomerID() {
-        return customerID;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public BigDecimal getTotalPrice() { // Ubah return type ke BigDecimal
-        return totalPrice;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    // Setters
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public String getCustomerName() {
+        return customerName;
     }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
+    }
+
+    public String getCustomerID() {
+        return customerID;
     }
 
     public void setCustomerID(String customerID) {
         this.customerID = customerID;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) { // Ubah parameter ke BigDecimal
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public void setStatus(String status) {

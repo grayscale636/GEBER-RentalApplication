@@ -1,0 +1,98 @@
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/1600x900/?luxury,car');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+/* Features Section */
+.features-section {
+    padding: 80px 0;
+    background: #333; /* Medium dark gray */
+    color: white;
+}
+
+.feature-card {
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s;
+    background: #444; /* Slightly lighter gray */
+    border-radius: 10px;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: #bbb; /* Light gray for icons */
+    margin-bottom: 20px;
+}
+
+/* Vehicle Types Section */
+.vehicle-types {
+    padding: 80px 0;
+    background: #333; /* Medium dark gray */
+    color: white;
+}
+
+.vehicle-card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+    background: #444; /* Slightly lighter gray */
+    border-radius: 10px;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 200px; /* Consistent image height */
+    object-fit: cover; /* Maintain aspect ratio while filling space */
+}
+
+.card-body {
+    height: 120px; /* Consistent height for card content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://source.unsplash.com/1600x900/?road,journey');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    color: white;
+}
+
+/* Footer */
+.footer {
+    background: #222; /* Darker gray for footer */
+    color: white;
+    padding: 50px 0;
+}
+
+/* Navbar */
+.navbar {
+    background: #222; /* Same darker gray as footer */
+    transition: background 0.3s;
+}
+
+.navbar.scrolled {
+    background: #111; /* Almost black when scrolled */
+}
+
+/* General Adjustments */
+.vehicle-card {
+    height: 100%; /* Make all cards the same height */
+    width: 100%; /* Make all cards the same width */
+}

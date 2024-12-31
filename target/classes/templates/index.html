@@ -5,119 +5,47 @@
     <title>GEBER - Go Everywhere, Better Ride</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        /* Custom CSS */
-        .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/1600x900/?luxury,car');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            color: white;
-        }
-
-        .features-section {
-            padding: 80px 0;
-            background: #f8f9fa;
-        }
-
-        .feature-card {
-            padding: 30px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-
-        .vehicle-types {
-            padding: 80px 0;
-        }
-
-        .vehicle-card {
-            border: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .vehicle-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .cta-section {
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://source.unsplash.com/1600x900/?road,journey');
-            background-size: cover;
-            background-position: center;
-            padding: 100px 0;
-            color: white;
-        }
-
-        .footer {
-            background: #343a40;
-            color: white;
-            padding: 50px 0;
-        }
-
-        .navbar {
-            transition: background 0.3s;
-        }
-
-        .navbar.scrolled {
-            background: rgba(0,0,0,0.9) !important;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-	<!-- <a href="/rentals" class="nav-link">Riwayat Rental</a> -->
-	<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-transparent">
-		<div class="container">
-			<a class="navbar-brand font-weight-bold" href="/">GEBER</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="/vehicles">Daftar Kendaraan</a>
-					</li>
-					<!-- Menu untuk Admin -->
-					<li class="nav-item" th:if="${session.isAdmin}">
-						<a class="nav-link" href="/showNewVehicleForm">Tambah Kendaraan</a>
-					</li>
-					<li class="nav-item" th:if="${session.isAdmin}">
-						<a class="nav-link" href="/rentals">Daftar Rental</a>
-					</li>
-					<!-- Menu Login/Logout -->
-					<li class="nav-item" th:if="${session.isAdmin}">
-						<span class="nav-link">
-							<i class="fas fa-user"></i> 
-							<span th:text="${session.username}"></span>
-						</span>
-					</li>
-					<li class="nav-item" th:if="${session.isAdmin}">
-						<a class="nav-link" href="/admin/logout">
-							<i class="fas fa-sign-out-alt"></i> Logout
-						</a>
-					</li>
-					<li class="nav-item" th:unless="${session.isAdmin}">
-						<a class="nav-link" href="/admin/login">
-							<i class="fas fa-sign-in-alt"></i> Admin Login
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #222;">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold" href="/">GEBER</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vehicles">Daftar Kendaraan</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.isAdmin}">
+                        <a class="nav-link" href="/showNewVehicleForm">Tambah Kendaraan</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.isAdmin}">
+                        <a class="nav-link" href="/rentals">Daftar Rental</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.isAdmin}">
+                        <span class="nav-link">
+                            <i class="fas fa-user"></i> 
+                            <span th:text="${session.username}"></span>
+                        </span>
+                    </li>
+                    <li class="nav-item" th:if="${session.isAdmin}">
+                        <a class="nav-link" href="/admin/logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                    <li class="nav-item" th:unless="${session.isAdmin}">
+                        <a class="nav-link" href="/admin/login">
+                            <i class="fas fa-sign-in-alt"></i> Admin Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>    
 
-    <!-- Hero Section -->
     <section class="hero-section">
         <div class="container text-center">
             <h1 class="display-3 font-weight-bold mb-4">GEBER</h1>
@@ -127,7 +55,6 @@
         </div>
     </section>
 
-    <!-- Features Section -->
     <section id="features" class="features-section">
         <div class="container">
             <h2 class="text-center mb-5">Mengapa Memilih GEBER?</h2>
@@ -157,14 +84,13 @@
         </div>
     </section>
 
-    <!-- Vehicle Types Section -->
     <section id="vehicles" class="vehicle-types">
         <div class="container">
             <h2 class="text-center mb-5">Pilihan Kendaraan</h2>
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <div class="card vehicle-card">
-                        <img src="https://source.unsplash.com/600x400/?luxury,car" class="card-img-top" alt="Mobil">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Car_crash_1.jpg" class="card-img-top" alt="Mobil">
                         <div class="card-body">
                             <h5 class="card-title">Mobil Mewah</h5>
                             <p class="card-text">Nikmati perjalanan dengan mobil mewah pilihan kami</p>
@@ -173,16 +99,16 @@
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="card vehicle-card">
-                        <img src="https://source.unsplash.com/600x400/?suv" class="card-img-top" alt="SUV">
+                        <img src="https://media.istockphoto.com/id/467208248/id/foto/bus-india.jpg?s=1024x1024&w=is&k=20&c=OjbefpPPwF0DXIrAqlBIUilitFJSY95-ETDQVtIlYe8=" class="card-img-top" alt="SUV">
                         <div class="card-body">
-                            <h5 class="card-title">SUV</h5>
-                            <p class="card-text">Sempurna untuk petualangan keluarga</p>
+                            <h5 class="card-title">Long Car</h5>
+                            <p class="card-text">Sangat cocok untuk petualangan keluarga 5-12 orang</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="card vehicle-card">
-                        <img src="https://source.unsplash.com/600x400/?motorcycle" class="card-img-top" alt="Motor">
+                        <img src="https://photos.hamariweb.com/photos/Funny-My-New-Motor-By-Cycle-1057.jpg" class="card-img-top" alt="Motor">
                         <div class="card-body">
                             <h5 class="card-title">Motor</h5>
                             <p class="card-text">Praktis dan ekonomis untuk perjalanan harian</p>
@@ -193,7 +119,6 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section">
         <div class="container text-center">
             <h2 class="mb-4">Siap Memulai Perjalanan?</h2>
@@ -202,7 +127,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -227,12 +151,10 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-    <!-- Custom JS for Navbar scroll effect -->
     <script>
         $(window).scroll(function() {
             if ($(window).scrollTop() > 50) {

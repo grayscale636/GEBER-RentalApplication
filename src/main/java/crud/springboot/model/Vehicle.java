@@ -26,6 +26,9 @@ public class Vehicle {
     @Column(name = "daily_rate", nullable = false)
     private BigDecimal dailyRate;
 
+    @Column(name = "type", nullable = false)
+    private String type;
+
     @Column(name = "status", nullable = false)
     private String status = "Available";
 
@@ -76,6 +79,14 @@ public class Vehicle {
 
     public void setDailyRate(BigDecimal dailyRate) {
         this.dailyRate = dailyRate;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getStatus() {

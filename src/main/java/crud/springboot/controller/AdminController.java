@@ -9,13 +9,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AdminController {
-    
+
     private static final String ADMIN_USERNAME = "admin";
     private static final String ADMIN_PASSWORD = "admin123";
 
     @GetMapping("/admin/login")
     public String loginPage() {
-        return "login"; // Mengarah ke templates/login.html
+        return "login";
     }
 
     @PostMapping("/admin/login")

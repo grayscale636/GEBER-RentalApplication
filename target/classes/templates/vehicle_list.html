@@ -5,8 +5,50 @@
     <title>GEBER - Daftar Kendaraan</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <style>
+        body {
+            background-color: #ffff;
+        }
+    </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">GEBER</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vehicles">Daftar Kendaraan</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.isAdmin}">
+                        <a class="nav-link" href="/showNewVehicleForm">Tambah Kendaraan</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.isAdmin}">
+                        <a class="nav-link" href="/rentals">Daftar Rental</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.isAdmin}">
+                        <span class="nav-link">
+                            <i class="fas fa-user"></i> 
+                            <span th:text="${session.username}"></span>
+                        </span>
+                    </li>
+                    <li class="nav-item" th:if="${session.isAdmin}">
+                        <a class="nav-link" href="/admin/logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                    <li class="nav-item" th:unless="${session.isAdmin}">
+                        <a class="nav-link" href="/admin/login">
+                            <i class="fas fa-sign-in-alt"></i> Admin Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container my-2">
         <h1>Daftar Kendaraan</h1>
         
@@ -19,26 +61,11 @@
         <table class="table table-striped table-responsive-md">
             <thead>
                 <tr>
-                    <th>
-                        <a th:href="@{'/vehicles/page/' + ${currentPage} + '?sortField=brand&sortDir=' + ${reverseSortDir}}">
-                            Merek
-                        </a>
-                    </th>
-                    <th>
-                        <a th:href="@{'/vehicles/page/' + ${currentPage} + '?sortField=model&sortDir=' + ${reverseSortDir}}">
-                            Model
-                        </a>
-                    </th>
-                    <th>
-                        <a th:href="@{'/vehicles/page/' + ${currentPage} + '?sortField=plateNumber&sortDir=' + ${reverseSortDir}}">
-                            Plat Nomor
-                        </a>
-                    </th>
-                    <th>
-                        <a th:href="@{'/vehicles/page/' + ${currentPage} + '?sortField=dailyRate&sortDir=' + ${reverseSortDir}}">
-                            Tarif per Hari
-                        </a>
-                    </th>
+                    <th>Merek</th>
+                    <th>Model</th>
+                    <th>Tipe Kendaraan</th>
+                    <th>Plat Nomor</th>
+                    <th>Tarif per Hari</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
@@ -47,22 +74,20 @@
                 <tr th:each="vehicle : ${listVehicles}">
                     <td th:text="${vehicle.brand}"></td>
                     <td th:text="${vehicle.model}"></td>
+                    <td th:text="${vehicle.type}"></td>
                     <td th:text="${vehicle.plateNumber}"></td>
                     <td th:text="${'Rp ' + #numbers.formatDecimal(vehicle.dailyRate, 0, 'COMMA', 0, 'POINT')}"></td>
                     <td>
-                        <span th:if="${vehicle.status == 'AVAILABLE'}" class="badge badge-success">Tersedia</span>
+                        <span th:if="${vehicle.status == 'Available'}" class="badge badge-success">Tersedia</span>
                         <span th:if="${vehicle.status == 'RENTED'}" class="badge badge-warning">Disewa</span>
-                        <span th:if="${vehicle.status == 'MAINTENANCE'}" class="badge badge-danger">Maintenance</span>
+                        <span th:if="${vehicle.status == 'Maintenance'}" class="badge badge-danger">Maintenance</span>
                     </td>
                     <td>
-                        <!-- Tombol Rental hanya muncul jika status AVAILABLE -->
-                        <a th:if="${vehicle.status == 'AVAILABLE'}" 
+                        <a th:if="${vehicle.status == 'Available'}" 
                            th:href="@{/rent/{id}(id=${vehicle.id})}" 
                            class="btn btn-success btn-sm">
                             <i class="fas fa-car"></i> Rental
                         </a>
-                        
-                        <!-- Tombol Admin hanya muncul jika user adalah admin -->
                         <div th:if="${session.isAdmin}" class="btn-group">
                             <a th:href="@{/showFormForUpdate/{id}(id=${vehicle.id})}" 
                                class="btn btn-primary btn-sm">
@@ -78,7 +103,7 @@
                 </tr>
             </tbody>
         </table>
-        
+
         <div th:if="${totalPages > 1}">
             <div class="row">
                 <div class="col-sm-2">
