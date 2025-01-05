@@ -117,11 +117,10 @@ public class RentalController {
             return;
         }
         
-        // Set response headers
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=bukti_rental_" + rental.getId() + ".pdf");
         
-        // Generate PDF
+        // generate ODF
         try (ServletOutputStream out = response.getOutputStream()) {
             Document document = new Document();
             PdfWriter.getInstance(document, out);
