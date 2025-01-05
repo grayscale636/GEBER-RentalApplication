@@ -21,8 +21,7 @@ public class AuthController {
                        @RequestParam String password,
                        HttpSession session,
                        RedirectAttributes redirectAttributes) {
-        
-        // Contoh sederhana (dalam praktik nyata gunakan authentication service)
+
         if ("admin".equals(username) && "admin123".equals(password)) {
             session.setAttribute("isAdmin", true);
             session.setAttribute("username", username);

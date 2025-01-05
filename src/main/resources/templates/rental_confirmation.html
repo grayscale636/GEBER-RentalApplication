@@ -64,8 +64,8 @@
                         
                         <div class="mt-4">
                             <a href="/vehicles" class="btn btn-primary">Kembali ke Daftar Kendaraan</a>
-                            <a th:href="@{/rental/print/{id}(id=${rental.id})}" class="btn btn-secondary">
-                                <i class="fas fa-print"></i> Cetak Bukti Rental
+                            <a th:href="@{/rental/downloadPdf/{id}(id=${rental.id})}" class="btn btn-info">
+                                <i class="fas fa-file-pdf"></i> Cetak Bukti Rental
                             </a>
                         </div>
                     </div>

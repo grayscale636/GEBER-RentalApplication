@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cetak Bukti Rental</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <style>
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact; /* Non-WebKit */
+            }
+            .no-print {
+                display: none; /* Sembunyikan elemen ini saat mencetak */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Bukti Rental</h2>
+        <div class="mt-4">
+            <p><strong>Nomor Booking:</strong> <span th:text="${rental.id}"></span></p>
+            <p><strong>Nama Pelanggan:</strong> <span th:text="${rental.customerName}"></span></p>
+            <p><strong>Total Biaya:</strong> <span th:text="${'Rp ' + #numbers.formatDecimal(rental.totalPrice, 0, 'COMMA', 0, 'POINT')}"></span></p>
+            <p><strong>Tanggal Mulai:</strong> <span th:text="${#dates.format(rental.startDate, 'dd/MM/yyyy')}"></span></p>
+            <p><strong>Tanggal Selesai:</strong> <span th:text="${#dates.format(rental.endDate, 'dd/MM/yyyy')}"></span></p>
+        </div>
+        <div class="text-center mt-4">
+            <button onclick="window.print();" class="btn btn-primary">Cetak</button>
+            <a href="/vehicles" class="btn btn-secondary no-print">Kembali ke Daftar Kendaraan</a>
+        </div>
+    </div>
+</body>
+</html>

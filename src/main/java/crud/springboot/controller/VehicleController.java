@@ -26,7 +26,7 @@ public class VehicleController {
 
     @GetMapping("/vehicles")
     public String viewHomePage(Model model, HttpSession session) {
-        return findPaginated(1, "brand", "asc", model); // Default ke halaman pertama
+        return findPaginated(1, "brand", "asc", model);
     }
 
    @GetMapping("/vehicles/page/{pageNo}")
@@ -34,7 +34,7 @@ public class VehicleController {
                                 @RequestParam(defaultValue = "brand") String sortField,
                                 @RequestParam(defaultValue = "asc") String sortDir,
                                 Model model) {
-       int pageSize = 5; // Ukuran halaman
+       int pageSize = 5; 
        Page<Vehicle> page = vehicleService.findPaginated(pageNo, pageSize, sortField, sortDir);
        model.addAttribute("currentPage", pageNo);
        model.addAttribute("totalPages", page.getTotalPages());
@@ -47,7 +47,7 @@ public class VehicleController {
        return "vehicle_list";
    }
 
-    // Tambah kendaraan (khusus admin)
+    // add vehicles (admin only)
     @GetMapping("/showNewVehicleForm")
     public String showNewVehicleForm(Model model, HttpSession session) {
         if (!Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
@@ -58,7 +58,7 @@ public class VehicleController {
         return "new_vehicle";
     }
 
-    // Simpan kendaraan (khusus admin)
+    // save vehicles (admin only)
     @PostMapping("/saveVehicle")
     public String saveVehicle(@ModelAttribute("vehicle") Vehicle vehicle, HttpSession session, RedirectAttributes redirectAttributes) {
         if (!Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
@@ -67,7 +67,7 @@ public class VehicleController {
 
         if (vehicle.getYear() == null) {
             redirectAttributes.addFlashAttribute("error", "Tahun kendaraan tidak boleh kosong");
-            return "redirect:/showNewVehicleForm"; // Kembali ke form jika ada kesalahan
+            return "redirect:/showNewVehicleForm"; 
         }
 
         vehicleService.saveVehicle(vehicle);
@@ -75,7 +75,7 @@ public class VehicleController {
         return "redirect:/vehicles";
     }
 
-    // Update kendaraan (khusus admin)
+    // update vehicles 
     @GetMapping("/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable(value = "id") long id, Model model, HttpSession session) {
         if (!Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
@@ -86,7 +86,7 @@ public class VehicleController {
         return "update_vehicle";
     }
 
-    // Hapus kendaraan (khusus admin)
+    // delete vehicles
     @GetMapping("/deleteVehicle/{id}")
     public String deleteVehicle(@PathVariable(value = "id") long id, HttpSession session) {
         if (!Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {

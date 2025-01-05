@@ -1,15 +1,23 @@
 package crud.springboot.controller;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import crud.springboot.model.Rental;
 import crud.springboot.model.Vehicle;
 import crud.springboot.service.RentalService;
 import crud.springboot.service.VehicleService;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -96,9 +104,46 @@ public class RentalController {
         return "rental_confirmation";
     }
 
+    @GetMapping("/rental/downloadPdf/{id}")
+    public void downloadPdf(@PathVariable Long id, HttpServletResponse response) {
+        Rental rental = rentalService.getRentalById(id);
+        
+        if (rental == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+        
+        // Set response headers
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=bukti_rental_" + rental.getId() + ".pdf");
+        
+        // Generate PDF
+        try (ServletOutputStream out = response.getOutputStream()) {
+            Document document = new Document();
+            PdfWriter.getInstance(document, out);
+            document.open();
+            
+            // Add content to PDF
+            document.add(new Paragraph("Bukti Rental"));
+            document.add(new Paragraph("Nomor Booking: " + rental.getId()));
+            document.add(new Paragraph("Nama Pelanggan: " + rental.getCustomerName()));
+            document.add(new Paragraph("Total Biaya: " + rental.getTotalPrice()));
+            document.add(new Paragraph("Tanggal Mulai: " + rental.getStartDate().toString()));
+            document.add(new Paragraph("Tanggal Selesai: " + rental.getEndDate().toString()));
+            
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/rental/print/{id}")
     public String printRental(@PathVariable Long id, Model model) {
         Rental rental = rentalService.getRentalById(id);
+        if (rental == null) {
+            throw new RuntimeException("Rental tidak ditemukan dengan ID: " + id);
+        }
         model.addAttribute("rental", rental);
         return "rental_print";
     }
