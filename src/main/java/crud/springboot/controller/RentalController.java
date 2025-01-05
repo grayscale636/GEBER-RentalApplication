@@ -1,6 +1,10 @@
 package crud.springboot.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import crud.springboot.model.Rental;
@@ -123,13 +127,35 @@ public class RentalController {
             PdfWriter.getInstance(document, out);
             document.open();
             
-            // Add content to PDF
-            document.add(new Paragraph("Bukti Rental"));
+            Paragraph header = new Paragraph("Bukti Rental Ceritanya", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+            header.setAlignment(Element.ALIGN_CENTER);
+            document.add(header);
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("Berkoh Raya no.69"));
+            document.add(new Paragraph("Telepon: 0335-8787-6996"));
+            document.add(new Paragraph("Email: geber@info.com"));
+            document.add(new Paragraph(" "));
+            
+            // add rental details
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+            document.add(new Paragraph("Tanggal Pemesanan: " + currentDate.format(formatter)));
+
             document.add(new Paragraph("Nomor Booking: " + rental.getId()));
             document.add(new Paragraph("Nama Pelanggan: " + rental.getCustomerName()));
             document.add(new Paragraph("Total Biaya: " + rental.getTotalPrice()));
             document.add(new Paragraph("Tanggal Mulai: " + rental.getStartDate().toString()));
             document.add(new Paragraph("Tanggal Selesai: " + rental.getEndDate().toString()));
+            
+            document.add(new Paragraph(" "));
+            
+            // add footer
+            document.add(new Paragraph("Terima kasih telah menggunakan layanan kami."));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("__________________________"));
+            document.add(new Paragraph("TTD."));
             
             document.close();
         } catch (Exception e) {
