@@ -6,7 +6,7 @@ GEBER Rental Application is a web-based application designed to manage vehicle r
 
 ## Project Details
 
-- **Technologies Used:**
+- **Tools Used:**
   - Java
   - Spring Boot
   - Thymeleaf
@@ -61,9 +61,9 @@ GEBER Rental Application is a web-based application designed to manage vehicle r
 
 ### Additional Information
 
-- The application uses an in-memory H2 database for development purposes. You can access the H2 console at `http://localhost:8080/h2-console` with the following credentials:
-  - **JDBC URL:** `jdbc:h2:mem:testdb`
-  - **Username:** `sa`
+- The application uses JDBC for the database, with the following credentials:
+  - **JDBC URL:** `jdbc:mysql://localhost:3306/rental_db`
+  - **Username:** `root`
   - **Password:** (leave blank)
 
 - To change the database configuration, update the `application.properties` file located in the 
