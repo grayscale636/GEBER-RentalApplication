@@ -88,11 +88,19 @@ public class VehicleController {
 
     // delete vehicles
     @GetMapping("/deleteVehicle/{id}")
-    public String deleteVehicle(@PathVariable(value = "id") long id, HttpSession session) {
+    public String deleteVehicle(@PathVariable(value = "id") long id, HttpSession session, RedirectAttributes redirectAttributes) {
         if (!Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
             return "redirect:/admin/login";
         }
+    
+        Vehicle vehicle = vehicleService.getVehicleById(id);
+        if ("RENTED".equalsIgnoreCase(vehicle.getStatus())) {
+            redirectAttributes.addFlashAttribute("error", "Kendaraan sedang disewa dan tidak bisa dihapus.");
+            return "redirect:/vehicles";
+        }
+    
         vehicleService.deleteVehicleById(id);
+        redirectAttributes.addFlashAttribute("success", "Kendaraan berhasil dihapus.");
         return "redirect:/vehicles";
     }
 }

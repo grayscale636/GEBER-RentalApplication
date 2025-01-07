@@ -79,7 +79,7 @@
                     <td th:text="${'Rp ' + #numbers.formatDecimal(vehicle.dailyRate, 0, 'COMMA', 0, 'POINT')}"></td>
                     <td>
                         <span th:if="${vehicle.status == 'Available'}" class="badge badge-success">Tersedia</span>
-                        <span th:if="${vehicle.status == 'RENTED'}" class="badge badge-warning">Disewa</span>
+                        <span th:if="${vehicle.status == 'RENTED' || vehicle.status == 'Rented'}" class="badge badge-warning">Disewa</span>
                         <span th:if="${vehicle.status == 'Maintenance'}" class="badge badge-danger">Maintenance</span>
                     </td>
                     <td>
@@ -103,6 +103,27 @@
                 </tr>
             </tbody>
         </table>
+
+        <div th:if="${error}" class="alert alert-danger" role="alert" id="error-alert">
+            <span th:text="${error}"></span>
+        </div>
+        <div th:if="${success}" class="alert alert-success" role="alert" id="success-alert">
+            <span th:text="${success}"></span>
+        </div>
+
+        <script>
+            // Function to hide alert messages after 2 seconds
+            setTimeout(function() {
+                var errorAlert = document.getElementById('error-alert');
+                if (errorAlert) {
+                    errorAlert.style.display = 'none';
+                }
+                var successAlert = document.getElementById('success-alert');
+                if (successAlert) {
+                    successAlert.style.display = 'none';
+                }
+            }, 2000); // 2000 milliseconds = 2 seconds
+        </script>
 
         <div th:if="${totalPages > 1}">
             <div class="row">
