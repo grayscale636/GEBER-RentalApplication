@@ -1,9 +1,3 @@
-Sure, here is a sample 
-
-README.md
-
- file for your project:
-
 ```markdown
 # GEBER Rental Application
 
