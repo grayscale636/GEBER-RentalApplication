@@ -1,4 +1,3 @@
-```markdown
 # GEBER Rental Application
 
 ## Project Description
